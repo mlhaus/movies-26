@@ -1,7 +1,11 @@
 package edu.kirkwood.dao;
 
 import edu.kirkwood.model.json.MovieSearchResult;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
+import java.io.IOException;
 import java.util.List;
 
 public class JsonMovieDAO implements MovieDAO<MovieSearchResult> {
@@ -21,6 +25,30 @@ public class JsonMovieDAO implements MovieDAO<MovieSearchResult> {
      */
     @Override
     public List<MovieSearchResult> search(String title) {
+        String responseBody = fetchRawData(title);
+        System.out.println(responseBody);
         return List.of();
+    }
+
+    public String fetchRawData(String title) {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(apiURL + title)
+                .get()
+                .addHeader("Authorization", "Bearer " + apiToken)
+                .addHeader("accept", "application/json")
+                .build();
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            String responseBody = response.body().string();
+            return responseBody;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
