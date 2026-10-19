@@ -1,5 +1,9 @@
 package edu.kirkwood.dao;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import edu.kirkwood.model.json.MovieSearchResult;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -26,8 +30,15 @@ public class JsonMovieDAO implements MovieDAO<MovieSearchResult> {
     @Override
     public List<MovieSearchResult> search(String title) {
         String responseBody = fetchRawData(title);
-        System.out.println(responseBody);
+        prettyPrintResponse(responseBody);
         return List.of();
+    }
+
+    public void prettyPrintResponse(String responseBody) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonElement jsonElement = new JsonParser().parse(responseBody);
+        String json = gson.toJson(jsonElement);
+        System.out.println(json);
     }
 
     public String fetchRawData(String title) {

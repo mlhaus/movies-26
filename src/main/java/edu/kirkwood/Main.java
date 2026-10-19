@@ -10,7 +10,7 @@ import java.util.List;
 public class Main {
     static void main() {
         MovieDAO movieDAO = MovieDAOFactory.getMovieDAO();
-        String searchTitle = "Joker"; // TODO: Implement the UserInput class
+        String searchTitle = "Pokemon"; // TODO: Implement the UserInput class
         if(movieDAO instanceof XmlMovieDAO) {
             XmlMovieDAO xmlMovieDAO = (XmlMovieDAO) movieDAO;
             List<edu.kirkwood.model.xml.MovieSearchResult> results = xmlMovieDAO.search(searchTitle);
