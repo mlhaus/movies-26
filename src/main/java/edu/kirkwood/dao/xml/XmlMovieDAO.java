@@ -1,5 +1,6 @@
-package edu.kirkwood.dao;
+package edu.kirkwood.dao.xml;
 
+import edu.kirkwood.dao.MovieDAO;
 import edu.kirkwood.model.xml.MovieSearchResult;
 import edu.kirkwood.model.xml.OmdbMovieResponse;
 import jakarta.xml.bind.JAXBContext;
@@ -16,7 +17,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
 
-public class XmlMovieDAO implements MovieDAO<MovieSearchResult>  {
+public class XmlMovieDAO implements MovieDAO<MovieSearchResult> {
     private String url;
 
     public XmlMovieDAO(String url) {
